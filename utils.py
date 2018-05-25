@@ -33,5 +33,6 @@ def get_residuals(data):
 def model_evaluation(model_output):
 	inter, slope, y_true, y_pred = model_output
 	r2 = metrics.r2_score(y_true, y_pred)
-	return(r2)
+	mse = metrics.mean_squared_error(y_true, y_pred)
+	return(r2, mse)
 
