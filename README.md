@@ -8,7 +8,7 @@
 
 ## Current Progress
 
-R^2 table
+### R^2 table
 
 | file                      | 1            | 2            | 3             | 4              | 5            |
 | ------------------------- | ------------ | ------------ | ------------- | -------------- | ------------ |
@@ -22,6 +22,6 @@ R^2 table
 \* - rough try, maybe can do better if we adjust the parameters
 
 
-RMSE table 
+### RMSE table 
 
 ...in progress
