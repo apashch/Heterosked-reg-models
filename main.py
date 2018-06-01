@@ -1,6 +1,7 @@
 from utils import *
 from GLSE import *
 from LASSO import *
+import matplotlib.pyplot as plt
 
 
 if __name__ == "__main__":
@@ -17,4 +18,14 @@ if __name__ == "__main__":
 		print(model_evaluation(o[k][3]))
 		print(model_evaluation(o[k][4]))
 		print(model_evaluation(o[k][5]))
+
+	for k in o.keys():
+		fig, ax = plt.subplots()
+		ax.scatter(df[k].x, df[k].y)
+		ax.plot(df[k].x, o[k][0][-2], color = 'b', label = 'LSE')
+		#ax.scatter(df[k].x, o[k][1][-2], color = 'r', label = 'GLSE')
+		ax.plot(df[k].x, o[k][1][0] + o[k][1][1]*df[k].x, color = 'r', label = 'GLSE')
+		legend = ax.legend()
+		plt.savefig("pred_plot_{}".format(k))
+		plt.close()
 
