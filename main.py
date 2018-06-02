@@ -26,6 +26,6 @@ if __name__ == "__main__":
 		#ax.scatter(df[k].x, o[k][1][-2], color = 'r', label = 'GLSE')
 		ax.plot(df[k].x, o[k][1][0] + o[k][1][1]*df[k].x, color = 'r', label = 'GLSE')
 		legend = ax.legend()
-		plt.savefig("pred_plot_{}".format(k))
+		plt.savefig("pred_plot_{}_2".format(k))
 		plt.close()
 

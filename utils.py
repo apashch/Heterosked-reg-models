@@ -39,10 +39,7 @@ def model_evaluation(model_output):
 	inter, slope, y_pred, y_true = model_output
 	r2 = metrics.r2_score(y_true, y_pred)
 	mse = metrics.mean_squared_error(y_true, y_pred)
-<<<<<<< HEAD
 	rmse = root_mean_squared_error(y_true, y_pred)
 	return(r2, mse, rmse)
-=======
-	return(r2, mse)
->>>>>>> 9a4366f2264394d31494a4f9589c8263801a65df
+
 
