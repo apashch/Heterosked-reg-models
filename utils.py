@@ -42,4 +42,11 @@ def model_evaluation(model_output):
 	rmse = root_mean_squared_error(y_true, y_pred)
 	return(r2, mse, rmse)
 
+def get_model_prediction(x, a0, a1):
+	return a0+a1*x
+
+def get_residuals2(x, model):
+	y_true = model[-1]
+	return  get_model_prediction(x, model[0], model[1]) - y_true
+
 

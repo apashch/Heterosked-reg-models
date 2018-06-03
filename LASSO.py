@@ -7,7 +7,7 @@ def LASSO(data):
 	lr = linear_model.LassoCV(eps = 0.0001, n_alphas = 1000)
 	lr.fit(X, y)
 	a1, a2 = lr.intercept_, lr.coef_[1]
-	return(a1, a2, y, lr.predict(X))
+	return(a1, a2, lr.predict(X), y)
 
 def Ridge(data):
 	X = data.drop("y", axis = 1)
@@ -15,7 +15,7 @@ def Ridge(data):
 	lr = linear_model.RidgeCV(alphas = np.arange(-20, 20, 0.05), )
 	lr.fit(X, y)
 	a1, a2 = lr.intercept_, lr.coef_[1]
-	return(a1, a2, y, lr.predict(X))
+	return(a1, a2, lr.predict(X), y)
 
 def Huber(data, epsilon = 1.6):
 	X = data.drop("y", axis = 1)
@@ -23,4 +23,4 @@ def Huber(data, epsilon = 1.6):
 	lr = linear_model.HuberRegressor()
 	lr.fit(X, y)
 	a1, a2 = lr.intercept_, lr.coef_[1]
-	return(a1, a2, y, lr.predict(X))
+	return(a1, a2, lr.predict(X), y)
