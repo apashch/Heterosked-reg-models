@@ -1,0 +1,206 @@
+\documentclass[letter,12pt]{article} % добавить leqno в [] для нумерации слева
+
+
+%%% Дополнительная работа с математикой
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage{hyperref}
+
+
+%% Номера формул
+\mathtoolsset{showonlyrefs=true} % Показывать номера только у тех формул, на которые есть \eqref{} в тексте.
+
+%% Шрифты
+\usepackage{euscript}    % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+%%% Заголовок
+\author{Artem Pashchinskiy}
+\title{SRP 99 Final Report}
+\date{\today}
+
+
+\usepackage{caption}
+\captionsetup{labelsep=period}
+
+\usepackage{graphicx}
+\setlength\fboxsep{3pt}
+\setlength\fboxrule{1pt} 
+\usepackage{wrapfig} 
+\usepackage{float}
+
+% ------------------------------------------------------------------------------
+% Definitions (do not change this)
+% ------------------------------------------------------------------------------
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}   % Horizontal rule
+
+\makeatletter                           % Title
+\def\printtitle{%                       
+	{\centering \@title\par}}
+\makeatother                                    
+
+\makeatletter                           % Author
+\def\printauthor{%                  
+	{\centering \large \@author}}               
+\makeatother                            
+
+% ------------------------------------------------------------------------------
+% Metadata (Change this)
+% ------------------------------------------------------------------------------
+\title{ \normalsize \textsc{UCLA College of Letters and Sciences \\ Department of Mathematics}  % Subtitle of the document
+	\\[2.0cm]                                                   % 2cm spacing
+	\HRule{0.5pt} \\                                        % Upper rule
+	\LARGE \textbf{\uppercase{Math 170B Project  Report}}   % Title
+	\HRule{2pt} \\ [0.5cm]                              % Lower rule + 0.5cm spacing
+	\printauthor                                    % Todays date
+}
+
+\author{
+	Artem Pashchinskiy and Jianzhen Wang
+}
+
+
+\begin{document}
+	% ------------------------------------------------------------------------------
+	% Maketitle
+	% ------------------------------------------------------------------------------
+	\thispagestyle{empty}               % Remove page numbering on this page
+	
+	\printtitle                                 % Print the title data as defined above
+	\vfill
+	\begin{center} \today \end{center}
+	
+	\newpage
+	
+	\textit{In most treatments of Gaussian linear models, constant variance of error is assumed under the ordinary least squares approach. However, in many real world applications, noise variance tends to be correlated with the input variable(s). In this project, we try to estimate the parameters of data-generating process in 5 datasets with an unknown distribution of noise. }\\
+	
+	In the problem specification, we are told that the linear model is of the form 
+	
+	$$y_i = a*x_i + b + e_i$$
+	%where the independent noise ei given x follows the distribution
+	%ei | xi ~ N(0, (cxi + d)2)
+	%
+	%c is a constant, and d represents global parameters. 
+	We started our work with creating scatter plots of the provided data. Based on the estimated distribution of variance,  we concluded that  heteroscedasticity is present in all 5 sets of data. That means that the variability of the response variable is unequal across the range of values of the independent variable. In order to find the best estimation for the parameters $a$ and $b$ in each data set, we formulated five different models, including Weighted Least Square Regression, Huber Regression, Ridge Regression, LASSO, and Generalized Least Square Regression to accommodate the volatile nature of the independent noise $e_i$.
+	
+	From a technical realization standpoint, we used Python coding language along with functions from publicly available packages Pandas, NumPy (for data processing) and SciPy Sklearn (for regression models). Full implementation of the code can be accessed on the \href{https://github.com/apashch/Heterosked-reg-models}{\underline{Git Hub repository}}.
+	
+	\subsection*{Ordinary Least Squares Regression}
+	The first and the most straight-forward approach was to perform Ordinary Least Squares Regression. It is known that although OLSE estimators remain unbiased in the cases of heteroskedastic data, those are no longer best estimators. Hence, we did not expect this model to have the most optimal performance. Instead, we used it in developing appropriate data transformations in more complicated examples of Weighted and Generalized Least Square regressions.
+	
+	\subsection*{Huber Regression}
+	
+	Since we observed some potential outliers, we also implemented the Huber Regression on the given data. Huber Regression takes into consideration impacts that the outliers make on the model, but it also makes sure that the loss function is not heavily influenced by the outliers. With Huber Regression, we optimized the squared loss and the absolute loss for the samples, in order to estimate $a$ and $b$ for the best-fitted line.
+	
+	\subsection*{Ridge Regression}
+	
+	We utilized the given ridge cross validation function in Python to fit the data sets. We set the alpha values from -20 to 20 with 0.5 increments to try the model. With the best alpha value for the loss function, we estimated the parameters a and b for the fitted regression line.
+	
+	\subsection*{LASSO}
+	
+	We applied the underlying LASSO cross validation function in Python on the response variable $y_i$ with the 0.0001 length of path and 1000 alphas along the path. We then used the loss function to estimate the parameters $a$ and $b$, trying to fit a regression line on each given data set.\\
+	
+	Although all models presented above have their advantages over the Ordinary Least Squares regression, none of them is specifically targeted to address the heteroskedastic nature of the data. Hence, we believe that results of the next three models are more reliable for this specific scenario.
+	
+	\subsection*{Weighted Least Squares}
+	One of the ways to approach x-dependent distribution of noise is to scale the contribution of various data points to the values of estimated coefficients. One of the simple dependencies that we were able to come up with based on the visual observations of data is 
+	$$
+	var(e_i) = \sigma^2_i = \sigma^2 x_i
+	$$
+	If the error of the data-generating process is following this dependency, we can use 
+	$$
+	\sqrt{x_i}
+	$$
+	as a weight coefficient of error, i.e. transform the data into a new set that has homoskedastic errors.
+	
+	Although Python packages have built-in functions for an automatic computation of weighted least square regression, we decided to stay conservative and perform the data transformation manually and use built-in functions only for applying OLSE to the transformed homoskedastic model.
+	
+	\subsection*{Generalized Least Squares - I}
+	Although in many cases Weighted Lest Squares gives a good estimate of the true coefficients $a$ and $b$, it is heavily dependent on how well the error dependency was estimated. Since we had limited amount of information about the error, we decided to also implement a more general framework of Generalized Least Squares regression.
+	
+	According to the assumptions of Generalized Least Square Regression, we know that the distribution of the dependent variable $y_i$ given $x_i$ is normal, but the variance of the residual is not constant.
+	
+	$$(y_i \, | \, x_i) \sim \mathcal{N}(a*x_i + b, var(e_i | x_i))$$
+	
+	Advantage of the GLSE method lies on the fact that opposed to WLSE it allows to automatically deduce the coefficients of error dependency. In this case we specified our model as
+	
+	$$
+	var(e_i | x_i) = \alpha*x^{\beta}
+	$$
+	
+	Since squares of OLSE residuals $\sigma_i$ can be used as estimates of true errors $e_i$, we can apply OLSE to the model
+	$$
+	\ln(\sigma^2_i) = \alpha + \beta \ln(|x|)
+	$$
+	
+	to get the estimated values $\hat{\alpha}$ and $\hat{\beta}$. Using this estimates, we can predict 
+	$$
+	var(e_i | x_i) = \hat{\sigma^2_i} = \exp{(\hat{\alpha} + \hat{\beta} \ln|x|)}.
+	$$
+	Once we have the predicted values, we can weigh the errors similarly to what we did in  WLSE method and get a homoskedastic model:
+	$$
+	y_i^* = a z_1 + bz_2 = a_1 * \frac{1}{\hat{\sigma_i}} + b  * \frac{x_i}{\hat{\sigma_i}}
+	$$
+	Finally, we can apply OLSE model to regress $y^*$ against $z_1$ and $z_2$ and get the 
+	estimations $\hat{a}$ and $\hat{b}$.
+	
+	\subsection*{Generalized Least Squares - II}
+	Towards the end of project development we got additional input specifying that functional form 
+	$$
+	var(e_i | x_i) = c + dx
+	$$
+	was used to create noise in the data-generating process. To accommodate this extra assumption, we repeated the of Generalized Least Squares method again using this new error form.
+	
+	Since this last attempt incorporates both known methodology of dealing with heteroskedastic error and the the largest available set of reliable assumptions (both a known model for data generating process and a known model for noise-generating process), we concluded that parameter estimates produced by this model should be the most accurate out of all considered models.
+	
+	
+	\subsection*{Results and Discussion}
+	
+	After obtaining the point estimates for all the models above, we utilized the coefficient of determination ($R^2$) and the root mean square error ($RMSE$) to assessment the quality of the parameter estimates. 
+	
+	$R^2$ is a statistical measure of the percentage of the response variable variation that is explained by a linear model. For each set of data, we applied the different models and we calculated the corresponding $R^2$. The following table is our finding.
+	\\\\
+	\begin{tabular}{|c||c|c|c|c|c|}
+		\hline 
+		Model/Dataset   &1  &2  &3& 4   &5  \\ 
+		\hline 
+		OLSE &  0.16399 & 0.39809 & 0.10320 & 0.02760 & 0.28058  \\ 
+		\hline 
+		WLSE &  0.16641 & 0.35762 & 0.03055 & 0.83423 & 0.43860  \\ 
+		\hline 
+		Huber & 0.15938 &   0.39379 &   0.08308 &   0.00603 & 0.25819 \\ 
+		\hline 
+		Ridge&0.16386&0.39809&0.10320&0.02670&0.28052  \\ 
+		\hline 
+		LASSO&0.16397&0.39809&0.10320&0.02759&0.02806  \\ 
+		\hline 
+		GLSE - I &0.22744&0.68233&0.11953&0.97459&0.71159  \\ 
+		\hline 
+		GLSE - II &0.22744&0.68233&0.11953&0.97459&0.71159   \\ 
+		\hline 
+	\end{tabular} 
+	\\\\
+	Although $R^2$ can be easily applied to measure the goodness of fit of a linear model, it has some limitations. First, $R^2$ does not determine if the predictions are unbiased. Based on the residual plots of the given data, our sample is biased, since the independent noise varies with the input variable. Second, $R^2$ does not indicate the accuracy of a regression model. In other words, high $R^2$ does not necessarily mean that the model fit the data well, and vice versa for the low $R^2$. Thus, we tried another metric, RMSE, to access the quality of our models. As its name suggests, the root mean square error is the square root of the average of squared differences between the predicted values and the sample values. The following table shows the RMSE value for each dataset with various regression models applied.
+	\\\\
+	\begin{tabular}{|c||c|c|c|c|c|}
+		\hline 
+		Model/Dataset   &1  &2  &3& 4   &5  \\ 
+		\hline 
+		OLSE &5.29497 & 15.42378 & 17.51802 &5.07327 & 11.10232 \\ 
+		\hline 
+		WLSE &  5.84677& 19.88008&19.01470 & 7.70563 & 14.80013  \\ 
+		\hline 
+		Huber & 5.31586 &   15.47881&   17.71345 &  5.12921& 11.27377 \\ 
+		\hline 
+		Ridge&5.29536&15.42380&17.51803&5.07560&11.10278  \\ 
+		\hline 
+		LASSO&5.29501 & 15.42378     &17.51806& 5.07327&    11.10233  \\ 
+		\hline 
+		GLSE - I &5.64948    &23.97476& 18.96527    &8.51875&   14.68550  \\ 
+		\hline 
+		GLSE - II &5.64948   &23.97476& 18.96527    &8.51875&   14.68550   \\ 
+		\hline 
+	\end{tabular} 
+	
+	
+	
+\end{document}
