@@ -34,12 +34,12 @@
 
 ## Model predictions
 #### File 1
-![pred_plot_1](pred_plot_1_new.png)
+![pred_plot_1](pred_plot_1_upd.png)
 #### File 2
-![pred_plot_2](pred_plot_2_new.png)
+![pred_plot_2](pred_plot_2_upd.png)
 #### File 3
-![pred_plot_3](pred_plot_3_new.png)
+![pred_plot_3](pred_plot_3_upd.png)
 #### File 4
-![pred_plot_4](pred_plot_4_new.png)
+![pred_plot_4](pred_plot_4_upd.png)
 #### File 5
-![pred_plot_5](pred_plot_5_new.png)
+![pred_plot_5](pred_plot_5_upd.png)

@@ -35,7 +35,7 @@ if __name__ == "__main__":
 		ax.plot(df[k].x, o[k][2][0] + o[k][2][1]*df[k].x, color = 'g', label = 'GLSEII')
 		ax.plot(df[k].x, o[k][3][0] + o[k][3][1]*df[k].x, color = 'm', label = 'WLSE')
 		legend = ax.legend()
-		plt.savefig("pred_plot_{}_new".format(k))
+		plt.savefig("pred_plot_{}_upd".format(k))
 		plt.close()
 
 	# for k in o.keys():
