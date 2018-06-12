@@ -1,12 +1,13 @@
 # Heterosked reg models
 
+## Project describtion and brief results
+This is a result of a class project for Math 170B (Spring 2018) in UCLA. The goal of the project was to get hands-on experience  with  fititng heteroskedastic data and analyzing the peroformance of various regresson models on it.
 
-## Main questions
-1. Which metrics other than R^2 we can use to evaluate the performance of our models?
-2. What other rgression types efficently deal with heteroskedacity?
+In the  course of the project we were able to conclude that theoretically the best tool for fitting data with  heteroskedacity is  Generalized Least Square (GLSE) regression. However, in  practice, for the datasets we had, ordinary Least Square Regression (LSE) had a better performance (see metrics below)
 
-
-## Current Progress
+* Full Report with the explanations of out work and conclusions is  avaliable [here](/Report/Final-report.pdf)
+* Final estimates of the  *a* and  *b* parameters  of  *y = a + bx + e* model are [here](/parameter-estimations.csv)
+* Below  you can find the most visually attractive results  of our work, namely two tables with the metrics of model performance  and 5 graphs with visualized data and model predictions (only more relevant models are included,  feel free to generate more plots by slightly modifying the [code](/main.py)
 
 ### R^2 table
 
