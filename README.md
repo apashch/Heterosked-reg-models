@@ -3,7 +3,7 @@
 ## Project describtion and brief results
 This is a result of a class project for Math 170B (Spring 2018) in UCLA. The goal of the project was to get hands-on experience  with  fititng heteroskedastic data and analyzing the peroformance of various regresson models on it.
 
-In the  course of the project we were able to conclude that theoretically the best tool for fitting data with  heteroskedacity is  Generalized Least Square (GLSE) regression. However, in  practice, for the datasets we had, ordinary Least Square Regression (LSE) had a better performance (see metrics below)
+In the  course of the project we were able to conclude that theoretically the best tool for fitting data with  heteroskedasticity is  Generalized Least Square (GLSE) regression. However, in  practice, for the datasets we had, ordinary Least Square Regression (LSE) had a better performance (see metrics below)
 
 * Full Report with the explanations of out work and conclusions is  avaliable [here](/Report/Final-report.pdf)
 * Final estimates of the  *a* and  *b* parameters  of  *y = a + bx + e* model are [here](/parameter-estimations.csv)
