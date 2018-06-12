@@ -25,19 +25,33 @@ if __name__ == "__main__":
 		print(' ')
 
 			
+	#save parameter vectors for selected models
+	with open("parameter-estimations.csv", 'w') as f:
+		f.write("dataset, OLSE (a ; b),  GLSE (a ; b)\n")
+		for k in o.keys():
+			f.write(str(k) +  ',')
+			f.write(str(o[k][0][0]) + "; " + str(o[k][0][1]) + ',')
+			f.write(str(o[k][2][0]) + "; " + str(o[k][2][1]) + '\n')
 
 
+
+	# plot the fitted lines for selected models 
 	for k in o.keys():
-		fig, ax = plt.subplots(figsize=(18, 12))
-		ax.scatter(df[k].x, df[k].y)
-		ax.plot(df[k].x, o[k][0][-2], color = 'b', label = 'LSE')
-		ax.plot(df[k].x, o[k][1][0] + o[k][1][1]*df[k].x, color = 'r', label = 'GLSEI')
-		ax.plot(df[k].x, o[k][2][0] + o[k][2][1]*df[k].x, color = 'g', label = 'GLSEII')
-		ax.plot(df[k].x, o[k][3][0] + o[k][3][1]*df[k].x, color = 'm', label = 'WLSE')
-		legend = ax.legend()
-		plt.savefig("pred_plot_{}_upd".format(k))
-		plt.close()
+	 	fig, ax = plt.subplots(figsize=(18, 12))
+	 	ax.scatter(df[k].x, df[k].y)
+	 	ax.plot(df[k].x, o[k][0][-2], color = 'b', label = 'LSE')
+	 	ax.plot(df[k].x, o[k][1][0] + o[k][1][1]*df[k].x, color = 'r', label = 'GLSEI')
+	 	ax.plot(df[k].x, o[k][2][0] + o[k][2][1]*df[k].x, color = 'g', label = 'GLSEII')
+	 	ax.plot(df[k].x, o[k][3][0] + o[k][3][1]*df[k].x, color = 'm', label = 'WLSE')
+	 	legend = ax.legend()
+	 	plt.xlabel("X")
+	 	plt.ylabel("Y")
+	 	plt.title("Predictions of selected models on dataset {}".format(k), fontsize=20)
 
+	 	plt.savefig("pred_plot_{}_upd".format(k))
+	 	plt.close()
+
+	#plot the residuals
 	# for k in o.keys():
 	# 	fig, ax = plt.subplots(figsize=(18, 12))
 	# 	ax.scatter(df[k].x, get_residuals2(df[k].x, o[k][1]))

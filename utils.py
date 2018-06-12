@@ -6,7 +6,7 @@ from statsmodels.stats.diagnostic import het_white
 from math import sqrt
 
 def getdata(masterfolder = './'):
-	filenames = glob(masterfolder+"*.csv")
+	filenames = glob(masterfolder+"data*.csv")
 	data = dict()
 	for fname in filenames:
 		df = pd.read_csv(fname)
