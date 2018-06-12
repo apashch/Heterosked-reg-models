@@ -7,7 +7,7 @@ In the  course of the project we were able to conclude that theoretically the be
 
 * Full Report with the explanations of out work and conclusions is  avaliable [here](/Report/Final-report.pdf)
 * Final estimates of the  *a* and  *b* parameters  of  *y = a + bx + e* model are [here](/parameter-estimations.csv)
-* Below  you can find the most visually attractive results  of our work, namely two tables with the metrics of model performance  and 5 graphs with visualized data and model predictions (only more relevant models are included,  feel free to generate more plots by slightly modifying the [code](/main.py)
+* Below  you can find the most visually attractive results  of our work, namely two tables with the metrics of model performance  and **5 graphs with visualized data and model predictions** (only more relevant models are included,  feel free to generate more plots by slightly modifying the [code](/main.py)
 
 ### R^2 table
 
