@@ -80,12 +80,12 @@
 	%ei | xi ~ N(0, (cxi + d)2)
 	%
 	%c is a constant, and d represents global parameters. 
-	We started our work with creating scatter plots of the provided data. Based on the estimated distribution of variance,  we concluded that  heteroscedasticity is present in all 5 sets of data. That means that the variability of the response variable is unequal across the range of values of the independent variable. In order to find the best estimation for the parameters $a$ and $b$ in each data set, we formulated five different models, including Weighted Least Square Regression, Huber Regression, Ridge Regression, LASSO, and Generalized Least Square Regression to accommodate the volatile nature of the independent noise $e_i$.
+	We started our work with creating scatter plots of the provided data. Based on the estimated distribution of variance,  we concluded that  heteroskedasticity is present in all 5 sets of data. That means that the variability of the response variable is unequal across the range of values of the independent variable. In order to find the best estimation for the parameters $a$ and $b$ in each data set, we formulated five different models, including Weighted Least Square Regression, Huber Regression, Ridge Regression, LASSO, and Generalized Least Square Regression to accommodate the volatile nature of the independent noise $e_i$.
 	
 	From a technical realization standpoint, we used Python coding language along with functions from publicly available packages Pandas, NumPy (for data processing) and SciPy Sklearn (for regression models). Full implementation of the code can be accessed on the \href{https://github.com/apashch/Heterosked-reg-models}{\underline{Git Hub repository}}.
 	
 	\subsection*{Ordinary Least Squares Regression}
-	The first and the most straight-forward approach was to perform Ordinary Least Squares Regression. Although OLSE estimators are unbiased, it does not accomodate heteroscedasticity. Hence, we did not expect this model to have the most optimal performance. We rather use it as a means to develop appropriate data transformations for more complicated methods, such as Weighted and Generalized Least Square regressions.
+	The first and the most straight-forward approach was to perform Ordinary Least Squares Regression. Although OLSE estimators are unbiased, it does not accomodate heteroskedasticity. Hence, we did not expect this model to have the most optimal performance. We rather use it as a means to develop appropriate data transformations for more complicated methods, such as Weighted and Generalized Least Square regressions.
 	
 	\subsection*{Huber Regression}
 	
@@ -198,7 +198,7 @@
 		\caption{$RMSE$ values}
 	\end{table}
 
-	Overall, RMSE is the most reliable metric to qualify the goodness-of-fit of a model because it remains unbiased in both cases of homoskedasticity and heteroscedasticity. From the values calculated above, we observed that OLSE actually gives the smallest error for all five datasets. 
+	Overall, RMSE is the most reliable metric to qualify the goodness-of-fit of a model because it remains unbiased in both cases of homoskedasticity and heteroskedasticity. From the values calculated above, we observed that OLSE actually gives the smallest error for all five datasets. 
 	
 	From this,  we conclude  that the variance of the noise should be closer to constant (as assumed in OLSE) than to the input-dependent assumptions of GLSE. Although we visually observed some apparent dependency on the plots of residuals,  it turns out that none of the functional forms we tried turned out to produce a better result than a simple constant assumption. 
 	\\\\
