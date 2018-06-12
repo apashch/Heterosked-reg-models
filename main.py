@@ -3,25 +3,44 @@ from GLSE import *
 from NONLIN import *
 import matplotlib.pyplot as plt
 
+# **************************
+# to operate with the dictionary o, use the follwing conventions
+# o[k][i][j] - get j-th entry of the model i for the dataset k. 
+
+# Ordering of models is as follows (consisent with the order in  metric tables in the report):
+# 0 : Least Sqares Regression
+# 1 : Generalized Least Sqares Regression w/assumed error variance ~ ax^b (GLSEI)
+# 2 : Generalized Least Sqares Regression w/assumed error variance ~ cx + d (GLSEII)
+# 3 : Weighted Least Sqares Regression 
+# 4 : LASSO
+# 5 : Ridge Regression
+# 6 : Huner regression 
+
+# Order of entries in model outputs are described in corresponding model-specification files (see GLSE.py and NONLIN.py)
+# **************************
+
 
 if __name__ == "__main__":
+	# load data and perform model fitting
 	df = getdata()
 	o = dict()
 	for dset in range(1, 6):
 		o[dset] = [LSE(df[dset]), GLSEI(df[dset]), GLSEII(df[dset]), WLSE(df[dset]), LASSO(df[dset]), Ridge(df[dset]), Huber(df[dset])]
 	
+
 	#get R2 values in a table
+	print("R2 Table")
 	for k in o.keys():
-		#print(k)
 		for m in range(len(o[1])):
-			print(model_evaluation(o[k][m])[0], end = ',')
+			print(model_evaluation(o[k][m])[0], end = '|')
 		print(' ')
+	print('\n')
 
 	#get RMSE values in a table
+	print("RMSE table")
 	for k in o.keys():
-		#print(k)
 		for m in range(len(o[1])):
-			print(model_evaluation(o[k][m])[2], end = ',')
+			print(model_evaluation(o[k][m])[2], end = '|')
 		print(' ')
 
 			
@@ -32,8 +51,6 @@ if __name__ == "__main__":
 			f.write(str(k) +  ',')
 			f.write(str(o[k][0][0]) + "; " + str(o[k][0][1]) + ',')
 			f.write(str(o[k][2][0]) + "; " + str(o[k][2][1]) + '\n')
-
-
 
 	# plot the fitted lines for selected models 
 	for k in o.keys():
